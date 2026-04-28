@@ -8,7 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
-import type * as runtime from "@prisma/client/runtime/client"
+import type * as runtime from "@prisma/client/runtime/library"
 import type * as $Enums from "../enums.js"
 import type * as Prisma from "../internal/prismaNamespace.js"
 
@@ -232,7 +232,7 @@ export type PlanGroupByOutputType = {
   _max: PlanMaxAggregateOutputType | null
 }
 
-export type GetPlanGroupByPayload<T extends PlanGroupByArgs> = Prisma.PrismaPromise<
+type GetPlanGroupByPayload<T extends PlanGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PlanGroupByOutputType, T['by']> &
       {
@@ -1297,11 +1297,6 @@ export type PlanFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Plans.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Plans.
-   */
   distinct?: Prisma.PlanScalarFieldEnum | Prisma.PlanScalarFieldEnum[]
 }
 

@@ -11,49 +11,66 @@
  * Please import the `PrismaClient` class from the `client.ts` file instead.
  */
 
-import * as runtime from "@prisma/client/runtime/client"
+import * as runtime from "@prisma/client/runtime/library"
 import type * as Prisma from "./prismaNamespace.js"
 
 
 const config: runtime.GetPrismaClientConfig = {
-  "previewFeatures": [],
-  "clientVersion": "7.8.0",
-  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
+  "generator": {
+    "name": "client",
+    "provider": {
+      "fromEnvVar": null,
+      "value": "prisma-client"
+    },
+    "output": {
+      "value": "/home/mohsen/Desktop/repo/tel-bot/src/generated/prisma",
+      "fromEnvVar": null
+    },
+    "config": {
+      "engineType": "library"
+    },
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x",
+        "native": true
+      }
+    ],
+    "previewFeatures": [],
+    "sourceFilePath": "/home/mohsen/Desktop/repo/tel-bot/prisma/schema.prisma",
+    "isCustomOutput": true
+  },
+  "relativePath": "../../../prisma",
+  "clientVersion": "6.19.3",
+  "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
+  "datasourceNames": [
+    "db"
+  ],
   "activeProvider": "sqlite",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel Plan {\n  id           Int      @id @default(autoincrement())\n  title        String\n  priceToman   Int\n  volumeGb     Int\n  durationDays Int\n  description  String?\n  isActive     Boolean  @default(true)\n  orders       Order[]\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n}\n\nmodel Order {\n  id              String      @id @default(cuid())\n  telegramUserId  String\n  username        String?\n  firstName       String?\n  planId          Int\n  plan            Plan        @relation(fields: [planId], references: [id])\n  status          OrderStatus @default(PENDING)\n  receiptFileId   String\n  receiptType     ReceiptType\n  adminMessageId  Int?\n  rejectionReason String?\n  configChatId    String?\n  configMessageId Int?\n  createdAt       DateTime    @default(now())\n  updatedAt       DateTime    @updatedAt\n}\n\nmodel Setting {\n  key       String   @id\n  value     String\n  updatedAt DateTime @updatedAt\n}\n\nenum OrderStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\nenum ReceiptType {\n  PHOTO\n  DOCUMENT\n}\n",
+  "postinstall": false,
+  "inlineDatasources": {
+    "db": {
+      "url": {
+        "fromEnvVar": "DATABASE_URL",
+        "value": null
+      }
+    }
+  },
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Plan {\n  id           Int      @id @default(autoincrement())\n  title        String\n  priceToman   Int\n  volumeGb     Int\n  durationDays Int\n  description  String?\n  isActive     Boolean  @default(true)\n  orders       Order[]\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n}\n\nmodel Order {\n  id              String      @id @default(cuid())\n  telegramUserId  String\n  username        String?\n  firstName       String?\n  planId          Int\n  plan            Plan        @relation(fields: [planId], references: [id])\n  status          OrderStatus @default(PENDING)\n  receiptFileId   String\n  receiptType     ReceiptType\n  adminMessageId  Int?\n  rejectionReason String?\n  configChatId    String?\n  configMessageId Int?\n  createdAt       DateTime    @default(now())\n  updatedAt       DateTime    @updatedAt\n}\n\nmodel Setting {\n  key       String   @id\n  value     String\n  updatedAt DateTime @updatedAt\n}\n\nenum OrderStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\nenum ReceiptType {\n  PHOTO\n  DOCUMENT\n}\n",
+  "inlineSchemaHash": "813cf519d347f7ec7dc9c71c078892ac3a55bd9cfdcdcfeae96938c033e15fb4",
+  "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
     "enums": {},
     "types": {}
   },
-  "parameterizationSchema": {
-    "strings": [],
-    "graph": ""
-  }
+  "dirname": ""
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Plan\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"priceToman\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"volumeGb\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"durationDays\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"orders\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"OrderToPlan\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Order\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"telegramUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"planId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"plan\",\"kind\":\"object\",\"type\":\"Plan\",\"relationName\":\"OrderToPlan\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"OrderStatus\"},{\"name\":\"receiptFileId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"receiptType\",\"kind\":\"enum\",\"type\":\"ReceiptType\"},{\"name\":\"adminMessageId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"rejectionReason\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"configChatId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"configMessageId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Setting\":{\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
-config.parameterizationSchema = {
-  strings: JSON.parse("[\"where\",\"orderBy\",\"cursor\",\"plan\",\"orders\",\"_count\",\"Plan.findUnique\",\"Plan.findUniqueOrThrow\",\"Plan.findFirst\",\"Plan.findFirstOrThrow\",\"Plan.findMany\",\"data\",\"Plan.createOne\",\"Plan.createMany\",\"Plan.createManyAndReturn\",\"Plan.updateOne\",\"Plan.updateMany\",\"Plan.updateManyAndReturn\",\"create\",\"update\",\"Plan.upsertOne\",\"Plan.deleteOne\",\"Plan.deleteMany\",\"having\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"Plan.groupBy\",\"Plan.aggregate\",\"Order.findUnique\",\"Order.findUniqueOrThrow\",\"Order.findFirst\",\"Order.findFirstOrThrow\",\"Order.findMany\",\"Order.createOne\",\"Order.createMany\",\"Order.createManyAndReturn\",\"Order.updateOne\",\"Order.updateMany\",\"Order.updateManyAndReturn\",\"Order.upsertOne\",\"Order.deleteOne\",\"Order.deleteMany\",\"Order.groupBy\",\"Order.aggregate\",\"Setting.findUnique\",\"Setting.findUniqueOrThrow\",\"Setting.findFirst\",\"Setting.findFirstOrThrow\",\"Setting.findMany\",\"Setting.createOne\",\"Setting.createMany\",\"Setting.createManyAndReturn\",\"Setting.updateOne\",\"Setting.updateMany\",\"Setting.updateManyAndReturn\",\"Setting.upsertOne\",\"Setting.deleteOne\",\"Setting.deleteMany\",\"Setting.groupBy\",\"Setting.aggregate\",\"AND\",\"OR\",\"NOT\",\"key\",\"value\",\"updatedAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"id\",\"telegramUserId\",\"username\",\"firstName\",\"planId\",\"OrderStatus\",\"status\",\"receiptFileId\",\"ReceiptType\",\"receiptType\",\"adminMessageId\",\"rejectionReason\",\"configChatId\",\"configMessageId\",\"createdAt\",\"title\",\"priceToman\",\"volumeGb\",\"durationDays\",\"description\",\"isActive\",\"every\",\"some\",\"none\",\"is\",\"isNot\",\"connectOrCreate\",\"upsert\",\"createMany\",\"set\",\"disconnect\",\"delete\",\"connect\",\"updateMany\",\"deleteMany\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
-  graph: "pQEeMA0EAAByACA-AABuADA_AAAJABBAAABuADBDQABYACFPAgAAAAFdQABYACFeAQBXACFfAgBvACFgAgBvACFhAgBvACFiAQBwACFjIABxACEBAAAAAQAgEgMAAHcAID4AAHMAMD8AAAMAEEAAAHMAMENAAFgAIU8BAFcAIVABAFcAIVEBAHAAIVIBAHAAIVMCAG8AIVUAAHRVIlYBAFcAIVgAAHVYIlkCAHYAIVoBAHAAIVsBAHAAIVwCAHYAIV1AAFgAIQcDAACfAQAgUQAAfQAgUgAAfQAgWQAAfQAgWgAAfQAgWwAAfQAgXAAAfQAgEgMAAHcAID4AAHMAMD8AAAMAEEAAAHMAMENAAFgAIU8BAAAAAVABAFcAIVEBAHAAIVIBAHAAIVMCAG8AIVUAAHRVIlYBAFcAIVgAAHVYIlkCAHYAIVoBAHAAIVsBAHAAIVwCAHYAIV1AAFgAIQMAAAADACABAAAEADACAAAFACABAAAAAwAgAQAAAAEAIA0EAAByACA-AABuADA_AAAJABBAAABuADBDQABYACFPAgBvACFdQABYACFeAQBXACFfAgBvACFgAgBvACFhAgBvACFiAQBwACFjIABxACECBAAAngEAIGIAAH0AIAMAAAAJACABAAAKADACAAABACADAAAACQAgAQAACgAwAgAAAQAgAwAAAAkAIAEAAAoAMAIAAAEAIAoEAACdAQAgQ0AAAAABTwIAAAABXUAAAAABXgEAAAABXwIAAAABYAIAAAABYQIAAAABYgEAAAABYyAAAAABAQsAAA4AIAlDQAAAAAFPAgAAAAFdQAAAAAFeAQAAAAFfAgAAAAFgAgAAAAFhAgAAAAFiAQAAAAFjIAAAAAEBCwAAEAAwAQsAABAAMAoEAACQAQAgQ0AAfAAhTwIAhwEAIV1AAHwAIV4BAHsAIV8CAIcBACFgAgCHAQAhYQIAhwEAIWIBAIMBACFjIACPAQAhAgAAAAEAIAsAABMAIAlDQAB8ACFPAgCHAQAhXUAAfAAhXgEAewAhXwIAhwEAIWACAIcBACFhAgCHAQAhYgEAgwEAIWMgAI8BACECAAAACQAgCwAAFQAgAgAAAAkAIAsAABUAIAMAAAABACASAAAOACATAAATACABAAAAAQAgAQAAAAkAIAYFAACKAQAgGAAAiwEAIBkAAI4BACAaAACNAQAgGwAAjAEAIGIAAH0AIAw-AABqADA_AAAcABBAAABqADBDQABQACFPAgBbACFdQABQACFeAQBPACFfAgBbACFgAgBbACFhAgBbACFiAQBaACFjIABrACEDAAAACQAgAQAAGwAwFwAAHAAgAwAAAAkAIAEAAAoAMAIAAAEAIAEAAAAFACABAAAABQAgAwAAAAMAIAEAAAQAMAIAAAUAIAMAAAADACABAAAEADACAAAFACADAAAAAwAgAQAABAAwAgAABQAgDwMAAIkBACBDQAAAAAFPAQAAAAFQAQAAAAFRAQAAAAFSAQAAAAFTAgAAAAFVAAAAVQJWAQAAAAFYAAAAWAJZAgAAAAFaAQAAAAFbAQAAAAFcAgAAAAFdQAAAAAEBCwAAJAAgDkNAAAAAAU8BAAAAAVABAAAAAVEBAAAAAVIBAAAAAVMCAAAAAVUAAABVAlYBAAAAAVgAAABYAlkCAAAAAVoBAAAAAVsBAAAAAVwCAAAAAV1AAAAAAQELAAAmADABCwAAJgAwDwMAAIgBACBDQAB8ACFPAQB7ACFQAQB7ACFRAQCDAQAhUgEAgwEAIVMCAIcBACFVAACEAVUiVgEAewAhWAAAhQFYIlkCAIYBACFaAQCDAQAhWwEAgwEAIVwCAIYBACFdQAB8ACECAAAABQAgCwAAKQAgDkNAAHwAIU8BAHsAIVABAHsAIVEBAIMBACFSAQCDAQAhUwIAhwEAIVUAAIQBVSJWAQB7ACFYAACFAVgiWQIAhgEAIVoBAIMBACFbAQCDAQAhXAIAhgEAIV1AAHwAIQIAAAADACALAAArACACAAAAAwAgCwAAKwAgAwAAAAUAIBIAACQAIBMAACkAIAEAAAAFACABAAAAAwAgCwUAAH4AIBgAAH8AIBkAAIIBACAaAACBAQAgGwAAgAEAIFEAAH0AIFIAAH0AIFkAAH0AIFoAAH0AIFsAAH0AIFwAAH0AIBE-AABZADA_AAAyABBAAABZADBDQABQACFPAQBPACFQAQBPACFRAQBaACFSAQBaACFTAgBbACFVAABcVSJWAQBPACFYAABdWCJZAgBeACFaAQBaACFbAQBaACFcAgBeACFdQABQACEDAAAAAwAgAQAAMQAwFwAAMgAgAwAAAAMAIAEAAAQAMAIAAAUAIAY-AABWADA_AAA4ABBAAABWADBBAQAAAAFCAQBXACFDQABYACEBAAAANQAgAQAAADUAIAY-AABWADA_AAA4ABBAAABWADBBAQBXACFCAQBXACFDQABYACEAAwAAADgAIAEAADkAMAIAADUAIAMAAAA4ACABAAA5ADACAAA1ACADAAAAOAAgAQAAOQAwAgAANQAgA0EBAAAAAUIBAAAAAUNAAAAAAQELAAA9ACADQQEAAAABQgEAAAABQ0AAAAABAQsAAD8AMAELAAA_ADADQQEAewAhQgEAewAhQ0AAfAAhAgAAADUAIAsAAEIAIANBAQB7ACFCAQB7ACFDQAB8ACECAAAAOAAgCwAARAAgAgAAADgAIAsAAEQAIAMAAAA1ACASAAA9ACATAABCACABAAAANQAgAQAAADgAIAMFAAB4ACAaAAB6ACAbAAB5ACAGPgAATgAwPwAASwAQQAAATgAwQQEATwAhQgEATwAhQ0AAUAAhAwAAADgAIAEAAEoAMBcAAEsAIAMAAAA4ACABAAA5ADACAAA1ACAGPgAATgAwPwAASwAQQAAATgAwQQEATwAhQgEATwAhQ0AAUAAhDgUAAFIAIBoAAFUAIBsAAFUAIEQBAAAAAUUBAAAABEYBAAAABEcBAAAAAUgBAAAAAUkBAAAAAUoBAAAAAUsBAFQAIUwBAAAAAU0BAAAAAU4BAAAAAQsFAABSACAaAABTACAbAABTACBEQAAAAAFFQAAAAARGQAAAAARHQAAAAAFIQAAAAAFJQAAAAAFKQAAAAAFLQABRACELBQAAUgAgGgAAUwAgGwAAUwAgREAAAAABRUAAAAAERkAAAAAER0AAAAABSEAAAAABSUAAAAABSkAAAAABS0AAUQAhCEQCAAAAAUUCAAAABEYCAAAABEcCAAAAAUgCAAAAAUkCAAAAAUoCAAAAAUsCAFIAIQhEQAAAAAFFQAAAAARGQAAAAARHQAAAAAFIQAAAAAFJQAAAAAFKQAAAAAFLQABTACEOBQAAUgAgGgAAVQAgGwAAVQAgRAEAAAABRQEAAAAERgEAAAAERwEAAAABSAEAAAABSQEAAAABSgEAAAABSwEAVAAhTAEAAAABTQEAAAABTgEAAAABC0QBAAAAAUUBAAAABEYBAAAABEcBAAAAAUgBAAAAAUkBAAAAAUoBAAAAAUsBAFUAIUwBAAAAAU0BAAAAAU4BAAAAAQY-AABWADA_AAA4ABBAAABWADBBAQBXACFCAQBXACFDQABYACELRAEAAAABRQEAAAAERgEAAAAERwEAAAABSAEAAAABSQEAAAABSgEAAAABSwEAVQAhTAEAAAABTQEAAAABTgEAAAABCERAAAAAAUVAAAAABEZAAAAABEdAAAAAAUhAAAAAAUlAAAAAAUpAAAAAAUtAAFMAIRE-AABZADA_AAAyABBAAABZADBDQABQACFPAQBPACFQAQBPACFRAQBaACFSAQBaACFTAgBbACFVAABcVSJWAQBPACFYAABdWCJZAgBeACFaAQBaACFbAQBaACFcAgBeACFdQABQACEOBQAAYAAgGgAAaQAgGwAAaQAgRAEAAAABRQEAAAAFRgEAAAAFRwEAAAABSAEAAAABSQEAAAABSgEAAAABSwEAaAAhTAEAAAABTQEAAAABTgEAAAABDQUAAFIAIBgAAGcAIBkAAFIAIBoAAFIAIBsAAFIAIEQCAAAAAUUCAAAABEYCAAAABEcCAAAAAUgCAAAAAUkCAAAAAUoCAAAAAUsCAGYAIQcFAABSACAaAABlACAbAABlACBEAAAAVQJFAAAAVQhGAAAAVQhLAABkVSIHBQAAUgAgGgAAYwAgGwAAYwAgRAAAAFgCRQAAAFgIRgAAAFgISwAAYlgiDQUAAGAAIBgAAGEAIBkAAGAAIBoAAGAAIBsAAGAAIEQCAAAAAUUCAAAABUYCAAAABUcCAAAAAUgCAAAAAUkCAAAAAUoCAAAAAUsCAF8AIQ0FAABgACAYAABhACAZAABgACAaAABgACAbAABgACBEAgAAAAFFAgAAAAVGAgAAAAVHAgAAAAFIAgAAAAFJAgAAAAFKAgAAAAFLAgBfACEIRAIAAAABRQIAAAAFRgIAAAAFRwIAAAABSAIAAAABSQIAAAABSgIAAAABSwIAYAAhCEQIAAAAAUUIAAAABUYIAAAABUcIAAAAAUgIAAAAAUkIAAAAAUoIAAAAAUsIAGEAIQcFAABSACAaAABjACAbAABjACBEAAAAWAJFAAAAWAhGAAAAWAhLAABiWCIERAAAAFgCRQAAAFgIRgAAAFgISwAAY1giBwUAAFIAIBoAAGUAIBsAAGUAIEQAAABVAkUAAABVCEYAAABVCEsAAGRVIgREAAAAVQJFAAAAVQhGAAAAVQhLAABlVSINBQAAUgAgGAAAZwAgGQAAUgAgGgAAUgAgGwAAUgAgRAIAAAABRQIAAAAERgIAAAAERwIAAAABSAIAAAABSQIAAAABSgIAAAABSwIAZgAhCEQIAAAAAUUIAAAABEYIAAAABEcIAAAAAUgIAAAAAUkIAAAAAUoIAAAAAUsIAGcAIQ4FAABgACAaAABpACAbAABpACBEAQAAAAFFAQAAAAVGAQAAAAVHAQAAAAFIAQAAAAFJAQAAAAFKAQAAAAFLAQBoACFMAQAAAAFNAQAAAAFOAQAAAAELRAEAAAABRQEAAAAFRgEAAAAFRwEAAAABSAEAAAABSQEAAAABSgEAAAABSwEAaQAhTAEAAAABTQEAAAABTgEAAAABDD4AAGoAMD8AABwAEEAAAGoAMENAAFAAIU8CAFsAIV1AAFAAIV4BAE8AIV8CAFsAIWACAFsAIWECAFsAIWIBAFoAIWMgAGsAIQUFAABSACAaAABtACAbAABtACBEIAAAAAFLIABsACEFBQAAUgAgGgAAbQAgGwAAbQAgRCAAAAABSyAAbAAhAkQgAAAAAUsgAG0AIQ0EAAByACA-AABuADA_AAAJABBAAABuADBDQABYACFPAgBvACFdQABYACFeAQBXACFfAgBvACFgAgBvACFhAgBvACFiAQBwACFjIABxACEIRAIAAAABRQIAAAAERgIAAAAERwIAAAABSAIAAAABSQIAAAABSgIAAAABSwIAUgAhC0QBAAAAAUUBAAAABUYBAAAABUcBAAAAAUgBAAAAAUkBAAAAAUoBAAAAAUsBAGkAIUwBAAAAAU0BAAAAAU4BAAAAAQJEIAAAAAFLIABtACEDZAAAAwAgZQAAAwAgZgAAAwAgEgMAAHcAID4AAHMAMD8AAAMAEEAAAHMAMENAAFgAIU8BAFcAIVABAFcAIVEBAHAAIVIBAHAAIVMCAG8AIVUAAHRVIlYBAFcAIVgAAHVYIlkCAHYAIVoBAHAAIVsBAHAAIVwCAHYAIV1AAFgAIQREAAAAVQJFAAAAVQhGAAAAVQhLAABlVSIERAAAAFgCRQAAAFgIRgAAAFgISwAAY1giCEQCAAAAAUUCAAAABUYCAAAABUcCAAAAAUgCAAAAAUkCAAAAAUoCAAAAAUsCAGAAIQ8EAAByACA-AABuADA_AAAJABBAAABuADBDQABYACFPAgBvACFdQABYACFeAQBXACFfAgBvACFgAgBvACFhAgBvACFiAQBwACFjIABxACFnAAAJACBoAAAJACAAAAABbAEAAAABAWxAAAAAAQAAAAAAAAFsAQAAAAEBbAAAAFUCAWwAAABYAgVsAgAAAAFyAgAAAAFzAgAAAAF0AgAAAAF1AgAAAAEFbAIAAAABcgIAAAABcwIAAAABdAIAAAABdQIAAAABBRIAAKEBACATAACkAQAgaQAAogEAIGoAAKMBACBvAAABACADEgAAoQEAIGkAAKIBACBvAAABACAAAAAAAAFsIAAAAAELEgAAkQEAMBMAAJYBADBpAACSAQAwagAAkwEAMGsAAJQBACBsAACVAQAwbQAAlQEAMG4AAJUBADBvAACVAQAwcAAAlwEAMHEAAJgBADANQ0AAAAABTwEAAAABUAEAAAABUQEAAAABUgEAAAABVQAAAFUCVgEAAAABWAAAAFgCWQIAAAABWgEAAAABWwEAAAABXAIAAAABXUAAAAABAgAAAAUAIBIAAJwBACADAAAABQAgEgAAnAEAIBMAAJsBACABCwAAoAEAMBIDAAB3ACA-AABzADA_AAADABBAAABzADBDQABYACFPAQAAAAFQAQBXACFRAQBwACFSAQBwACFTAgBvACFVAAB0VSJWAQBXACFYAAB1WCJZAgB2ACFaAQBwACFbAQBwACFcAgB2ACFdQABYACECAAAABQAgCwAAmwEAIAIAAACZAQAgCwAAmgEAIBE-AACYAQAwPwAAmQEAEEAAAJgBADBDQABYACFPAQBXACFQAQBXACFRAQBwACFSAQBwACFTAgBvACFVAAB0VSJWAQBXACFYAAB1WCJZAgB2ACFaAQBwACFbAQBwACFcAgB2ACFdQABYACERPgAAmAEAMD8AAJkBABBAAACYAQAwQ0AAWAAhTwEAVwAhUAEAVwAhUQEAcAAhUgEAcAAhUwIAbwAhVQAAdFUiVgEAVwAhWAAAdVgiWQIAdgAhWgEAcAAhWwEAcAAhXAIAdgAhXUAAWAAhDUNAAHwAIU8BAHsAIVABAHsAIVEBAIMBACFSAQCDAQAhVQAAhAFVIlYBAHsAIVgAAIUBWCJZAgCGAQAhWgEAgwEAIVsBAIMBACFcAgCGAQAhXUAAfAAhDUNAAHwAIU8BAHsAIVABAHsAIVEBAIMBACFSAQCDAQAhVQAAhAFVIlYBAHsAIVgAAIUBWCJZAgCGAQAhWgEAgwEAIVsBAIMBACFcAgCGAQAhXUAAfAAhDUNAAAAAAU8BAAAAAVABAAAAAVEBAAAAAVIBAAAAAVUAAABVAlYBAAAAAVgAAABYAlkCAAAAAVoBAAAAAVsBAAAAAVwCAAAAAV1AAAAAAQQSAACRAQAwaQAAkgEAMGsAAJQBACBvAACVAQAwAAIEAACeAQAgYgAAfQAgDUNAAAAAAU8BAAAAAVABAAAAAVEBAAAAAVIBAAAAAVUAAABVAlYBAAAAAVgAAABYAlkCAAAAAVoBAAAAAVsBAAAAAVwCAAAAAV1AAAAAAQlDQAAAAAFPAgAAAAFdQAAAAAFeAQAAAAFfAgAAAAFgAgAAAAFhAgAAAAFiAQAAAAFjIAAAAAECAAAAAQAgEgAAoQEAIAMAAAAJACASAAChAQAgEwAApQEAIAsAAAAJACALAAClAQAgQ0AAfAAhTwIAhwEAIV1AAHwAIV4BAHsAIV8CAIcBACFgAgCHAQAhYQIAhwEAIWIBAIMBACFjIACPAQAhCUNAAHwAIU8CAIcBACFdQAB8ACFeAQB7ACFfAgCHAQAhYAIAhwEAIWECAIcBACFiAQCDAQAhYyAAjwEAIQIEBgIFAAMBAwABAQQHAAAAAAUFAAgYAAkZAAoaAAsbAAwAAAAAAAUFAAgYAAkZAAoaAAsbAAwBAwABAQMAAQUFABEYABIZABMaABQbABUAAAAAAAUFABEYABIZABMaABQbABUAAAADBQAbGgAcGwAdAAAAAwUAGxoAHBsAHQYCAQcIAQgLAQkMAQoNAQwPAQ0RBA4SBQ8UARAWBBEXBhQYARUZARYaBBwdBx0eDR4fAh8gAiAhAiEiAiIjAiMlAiQnBCUoDiYqAicsBCgtDykuAiovAiswBCwzEC00Fi42Fy83FzA6FzE7FzI8FzM-FzRABDVBGDZDFzdFBDhGGTlHFzpIFztJBDxMGj1NHg"
-}
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Plan\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"title\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"priceToman\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"volumeGb\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"durationDays\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"description\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"isActive\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Boolean\",\"nativeType\":null,\"default\":true,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"orders\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Order\",\"nativeType\":null,\"relationName\":\"OrderToPlan\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"Order\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":null,\"default\":{\"name\":\"cuid\",\"args\":[1]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"telegramUserId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"username\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"firstName\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"planId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"plan\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Plan\",\"nativeType\":null,\"relationName\":\"OrderToPlan\",\"relationFromFields\":[\"planId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"status\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"OrderStatus\",\"nativeType\":null,\"default\":\"PENDING\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"receiptFileId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"receiptType\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"ReceiptType\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"adminMessageId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"rejectionReason\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"configChatId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"configMessageId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"Setting\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"value\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{\"OrderStatus\":{\"values\":[{\"name\":\"PENDING\",\"dbName\":null},{\"name\":\"APPROVED\",\"dbName\":null},{\"name\":\"REJECTED\",\"dbName\":null}],\"dbName\":null},\"ReceiptType\":{\"values\":[{\"name\":\"PHOTO\",\"dbName\":null},{\"name\":\"DOCUMENT\",\"dbName\":null}],\"dbName\":null}},\"types\":{}}")
+config.engineWasm = undefined
+config.compilerWasm = undefined
 
-async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
-  const { Buffer } = await import('node:buffer')
-  const wasmArray = Buffer.from(wasmBase64, 'base64')
-  return new WebAssembly.Module(wasmArray)
-}
-
-config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs"),
-
-  getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs")
-    return await decodeBase64AsWasm(wasm)
-  },
-
-  importName: "./query_compiler_fast_bg.js"
-}
 
 
 
@@ -67,14 +84,12 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient({
-   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
-   * })
+   * const prisma = new PrismaClient()
    * // Fetch zero or more Plans
    * const plans = await prisma.plan.findMany()
    * ```
    * 
-   * Read more in our [docs](https://pris.ly/d/client).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
   new <
@@ -82,7 +97,7 @@ export interface PrismaClientConstructor {
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
     OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-  >(options: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
+  >(options?: Prisma.Subset<Options, Prisma.PrismaClientOptions> ): PrismaClient<LogOpts, OmitOpts, ExtArgs>
 }
 
 /**
@@ -91,19 +106,17 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient({
- *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
- * })
+ * const prisma = new PrismaClient()
  * // Fetch zero or more Plans
  * const plans = await prisma.plan.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
-  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
+  in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = Prisma.PrismaClientOptions['omit'],
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -127,7 +140,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -139,7 +152,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -150,7 +163,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -162,7 +175,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -178,11 +191,12 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => runtime.Types.Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<R>
+
 
   $extends: runtime.Types.Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<OmitOpts>, ExtArgs, runtime.Types.Utils.Call<Prisma.TypeMapCb<OmitOpts>, {
     extArgs: ExtArgs
@@ -219,6 +233,7 @@ export interface PrismaClient<
   get setting(): Prisma.SettingDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
-export function getPrismaClientClass(): PrismaClientConstructor {
+export function getPrismaClientClass(dirname: string): PrismaClientConstructor {
+  config.dirname = dirname
   return runtime.getPrismaClient(config) as unknown as PrismaClientConstructor
 }
