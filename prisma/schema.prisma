@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Plan {
+  id           Int      @id @default(autoincrement())
+  title        String
+  priceToman   Int
+  volumeGb     Int
+  durationDays Int
+  description  String?
+  isActive     Boolean  @default(true)
+  orders       Order[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  telegramUserId String
+  username       String?
+  firstName      String?
+  planId         Int
+  plan           Plan        @relation(fields: [planId], references: [id])
+  status         OrderStatus @default(PENDING)
+  receiptFileId  String
+  receiptType    ReceiptType
+  adminMessageId Int?
+  rejectionReason String?
+  configChatId    String?
+  configMessageId Int?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ReceiptType {
+  PHOTO
+  DOCUMENT
+}
